@@ -3,11 +3,11 @@
 import React, { useEffect, useState } from 'react';
 // import { usdcBalance } from '../hooks/usdcBalance'
 import { getWeb3 } from '../../hooks/utils.js';
+import useMaxValue from '../../hooks/useMaxValue.js';
 import erc20 from '../../Abi/erc20.json'
 const BigNumber = require('bignumber.js')
 
 function ApproveToken(props) {
-
     const [web3, setWeb3] = useState(undefined);
     const [accounts, setAccounts] = useState(undefined);
     const [usdcContract, setUsdcContract] = useState(undefined);
@@ -17,7 +17,8 @@ function ApproveToken(props) {
     const [daiBalance, setDaiBalance] = useState(0);
     const [usdtBalance, setUsdtBalance] = useState(0);
     const [balance, setBalance] = useState([])
-
+    const { maxValue, setMaxValue, handleValueChange } = useMaxValue(props.balance);
+    
   useEffect(() => {
     const init = async () => {
       const web3 = await getWeb3();
@@ -131,7 +132,14 @@ function ApproveToken(props) {
                     <br/>
                 </div>:
                 <div>
-                <input onChange={props.onType} type="number" className="dark:text-white border rounded-md focus:outline-none dark:bg-dark-600 dark:border-0 bg-steel-100 p-2 pl-32 h-12 w-full" placeholder={0} defaultValue />
+                <input
+                    type="number"
+                    defaultValue
+                    placeholder={0}
+                    value={maxValue}
+                    onChange={handleValueChange}
+                    className="dark:text-white border rounded-md focus:outline-none dark:bg-dark-600 dark:border-0 bg-steel-100 p-2 pl-32 h-12 w-full"
+                />
                 <div className="flex justify-between ">
                     <div className="dark:border-0 dark:text-white dark:bg-dark-500 border rounded-md bg-white w-28 flex items-center p-2 -mt-12 z-10 relative">
                         <div style={{ display: 'inline-block', maxWidth: '100%', overflow: 'hidden', position: 'relative', boxSizing: 'border-box', margin: 0 }}>
@@ -143,6 +151,17 @@ function ApproveToken(props) {
                         <span className="font-bold ml-2">{props.name}</span>
                     </div>
                 </div>
+                <div
+                className="z-10 absolute"
+                style={{
+                  top: 24,
+                  right: 0,
+                }}
+              >
+                <button className="focus:outline-none w-full font-bold px-3 text-white  py-3 rounded-lg shadow-sm bg-blue-400" onClick={setMaxValue(props.balance)}>
+                 MAX
+                </button>
+              </div>
             </div>}
         </div> </div>
     </div>)
