@@ -158,7 +158,13 @@ function ApproveToken(props) {
                   right: 0,
                 }}
               >
-                <button className="focus:outline-none w-full font-bold px-3 text-white  py-3 rounded-lg shadow-sm bg-blue-400" onClick={setMaxValue(props.balance)}>
+                <button
+                    role="button"
+                    id="set-max-value-button"
+                    aria-label="max amount button"
+                    onClick={setMaxValue(props.balance)}
+                    className="focus:outline-none w-full font-bold px-3 text-white  py-3 rounded-lg shadow-sm bg-blue-400"
+                >
                  MAX
                 </button>
               </div>
